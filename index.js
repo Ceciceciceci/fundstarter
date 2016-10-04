@@ -7,13 +7,13 @@ var requestListener = function(req,res){
 	res.writeHead(200,{"Content-type":"text/html"});
 	fs.exists(filename, function(exists){
 		if(exists){
-			fs.stat(filename, function(exists){
+			fs.stat(filename, function(error,stats){
 				fs.open(filename, "r", function(error, fd){
 					var bufferread = new Buffer(stats.size);
 				
 					fs.read(fd, bufferread, 0, bufferread.length, null, function(error, bytesRead, buffer){
 						var dataout = buffer.toString("utf8", 0, bufferread.length);
-						res.end(data);
+						res.end(dataout);
 						fs.close(fd);
 					});
 				})
